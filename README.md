@@ -25,24 +25,23 @@ tw.Start()
 add delay task
 
 ```
-var key string = "hello"  // unique key, could remove task by this key.
 // create a task bind with key, data and  time out call back function.
 t := &timewheel.Task{
-    Key:  key,                                       // unqiue key
     Data: map[string]int{"uid": 105626, "age": 100}, // business data
     TimeoutCallback: func(task timewheel.Task) { // call back function on time out
         // process someting after time out happened. 
         fmt.Println("time out:", task.Delay(), task.Key, task.Data, task.Elasped())
     }}
 
-tw.AddTask(5*time.Second, *t) // add delay task
+// add task and return unique task id
+taskid := tw.AddTask(5*time.Second, *t) // add delay task
 
 ```
 
 remove delay task
 
 ```
-tw.Remove(task)
+tw.Remove(taskid)
 ```
 
 close time wheel

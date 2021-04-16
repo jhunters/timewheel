@@ -20,19 +20,19 @@ func main() {
 	// 启动时间轮
 	tw.Start()
 
-	var key string = "hello"
 	t := &timewheel.Task{
-		Key:  key,                                       // unqiue key
 		Data: map[string]int{"uid": 105626, "age": 100}, // call back data
 		TimeoutCallback: func(task timewheel.Task) { // call back function on time out
-			fmt.Println("time out:", task.Delay(), task.Key, task.Data, task.Elasped())
+			fmt.Println("time out:", task.Delay(), task.Data, task.Elasped())
 		}}
-	tw.AddTask(5*time.Second, *t)
+
+	// add task and return unique task id
+	taskid := tw.AddTask(5*time.Second, *t)
 
 	time.Sleep(10 * time.Second)
 
 	// 删除定时器, 参数为添加定时器传递的唯一标识
-	tw.RemoveTask(key)
+	tw.RemoveTask(taskid)
 
 	// 停止时间轮
 	tw.Stop()

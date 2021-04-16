@@ -2,6 +2,8 @@
 
 Pure golang implementation for timewheel.
 
+![pic/timewheel.png](pic/timewheel.png)
+
 ## Usage
 
 ### base method

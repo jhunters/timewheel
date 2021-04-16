@@ -28,6 +28,7 @@ func main() {
 
 	// add task and return unique task id
 	taskid := tw.AddTask(5*time.Second, *t)
+	fmt.Println("taskid=", taskid)
 
 	time.Sleep(10 * time.Second)
 

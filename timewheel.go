@@ -121,9 +121,10 @@ func (tw *TimeWheel) AddTask(delay time.Duration, task Task) taskid {
 		return 0
 	}
 	task.delay = delay
-	taskid := (taskid)(atomic.AddUint64((*uint64)(&tw.currentTaskID), uint64(1)))
-	tw.addTaskChannel <- TaskSlot{delay: delay, now: time.Now(), taskid: taskid, task: &task}
-	return taskid
+	tid := tw.currentTaskID
+	tw.currentTaskID = (taskid)(atomic.AddUint64((*uint64)(&tw.currentTaskID), uint64(1)))
+	tw.addTaskChannel <- TaskSlot{delay: delay, now: time.Now(), taskid: tid, task: &task}
+	return tid
 }
 
 // 新增任务到链表中

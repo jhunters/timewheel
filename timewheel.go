@@ -3,6 +3,7 @@ package timewheel
 import (
 	"container/list"
 	"errors"
+	"sync"
 	"sync/atomic"
 	"time"
 )
@@ -57,6 +58,7 @@ type TimeWheel struct {
 	removeTaskChannel chan taskid   // 删除任务channel
 	stopChannel       chan bool     // 停止定时器channel
 	currentTaskID     taskid        // 最新任务ID
+	locker            sync.Mutex    // task id locker
 }
 
 // New 创建时间轮
@@ -94,6 +96,7 @@ func (tw *TimeWheel) Start() {
 	go tw.start()
 }
 
+// start time wheel. to handle all chan listener in the loop
 func (tw *TimeWheel) start() {
 	for {
 		select {
@@ -121,8 +124,10 @@ func (tw *TimeWheel) AddTask(delay time.Duration, task Task) taskid {
 		return 0
 	}
 	task.delay = delay
+	tw.locker.Lock()
 	tid := tw.currentTaskID
 	tw.currentTaskID = (taskid)(atomic.AddUint64((*uint64)(&tw.currentTaskID), uint64(1)))
+	tw.locker.Unlock()
 	tw.addTaskChannel <- TaskSlot{delay: delay, now: time.Now(), taskid: tid, task: &task}
 	return tid
 }

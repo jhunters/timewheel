@@ -181,6 +181,28 @@ func (tw *TimeWheel) removeTask(key taskid) {
 	}
 }
 
+// HasTask to check task id exist
+func (tw *TimeWheel) HasTask(key taskid) bool {
+	// 获取定时器所在的槽
+	position, ok := tw.timer[key]
+	if !ok { // key not exist
+		return false
+	}
+
+	// 获取槽指向的链表
+	l := tw.slots[position]
+	for e := l.Front(); e != nil; {
+		taskSlot := e.Value.(*TaskSlot)
+		if taskSlot.taskid == key {
+			return true
+		}
+
+		e = e.Next()
+	}
+
+	return false
+}
+
 // 时间轮走动到slot位置时，触发处理
 func (tw *TimeWheel) tickHandler() {
 	l := tw.slots[tw.currentPos]

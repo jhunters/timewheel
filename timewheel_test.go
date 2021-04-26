@@ -5,6 +5,18 @@ import (
 	"time"
 )
 
+// TestTimeWheelCreateFaile test on create a new TimeWheel failed case
+func TestTimeWheelCreateFaile(t *testing.T) {
+	timewheel, err := New(100*time.Millisecond, 0)
+	if err == nil {
+		t.Error("New timewheel should return fail while slot num is zero.")
+	}
+
+	if timewheel != nil {
+		t.Error("New timewheel should return nil while slot num is zero.")
+	}
+}
+
 // TestTimeWheelCreate test to create a new TimeWheel instance
 func TestTimeWheelCreate(t *testing.T) {
 	var slotNum uint16 = 16
@@ -67,9 +79,43 @@ func TestTimeWheelStartAndTasks(t *testing.T) {
 	timewheel.removeTask(tid)
 
 	// add second task
-	tid = timewheel.AddTask(delay, *tt)
+	tid = timewheel.AddTask(delay*2*time.Duration(slotNum), *tt)
 	time.Sleep(100 * time.Millisecond)
-	timewheel.removeTask(tid)
+	timewheel.RemoveTask(tid)
 
 	time.Sleep(2 * time.Second)
+
+	timewheel.Stop()
+}
+
+// TestTimeWheelExceed1CircleCase to test time wheel task exceed 1 circle case
+func TestTimeWheelExceed1CircleCase(t *testing.T) {
+
+	var slotNum uint16 = 2
+	timewheel, err := New(100*time.Millisecond, slotNum)
+	if err != nil {
+		t.Error(err)
+	}
+
+	timewheel.Start()
+
+	// test add task and timeout
+	delay := 1 * time.Second
+	tt := &Task{
+		Data: map[string]int{"uid": 105626, "age": 100}, // call back data
+		TimeoutCallback: func(task Task) { // call back function on time out
+			if task.Elasped() < delay {
+				t.Error("time out value is errored it should be large than specified time out.")
+			}
+		}}
+	tid := timewheel.AddTask(delay, *tt)
+
+	time.Sleep(2 * time.Second)
+
+	exist := timewheel.HasTask(tid)
+	if exist {
+		t.Errorf("task id '%d' should not exist", tid)
+	}
+
+	timewheel.Stop()
 }

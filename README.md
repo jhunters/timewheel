@@ -53,6 +53,12 @@ remove delay task
 tw.Remove(taskid)
 ```
 
+check task
+
+```
+tw.HasTask(taskid)
+```
+
 close time wheel
 
 ```

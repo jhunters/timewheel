@@ -218,7 +218,7 @@ func (tw *TimeWheel) tickHandler() {
 func (tw *TimeWheel) scanAndRunTask(l *list.List) {
 	for e := l.Front(); e != nil; {
 		taskSlot := e.Value.(*TaskSlot)
-		if taskSlot.circle > 0 { // more than one circle
+		if taskSlot.circle > 0 {
 			taskSlot.circle--
 			e = e.Next()
 			continue

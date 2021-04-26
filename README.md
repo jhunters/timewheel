@@ -12,6 +12,13 @@ Pure golang implementation for timewheel.
 ![pic/timewheel.png](pic/timewheel.png)
 
 ## Usage
+### Installing 
+
+To start using timewheel, install Go and run `go get`:
+
+```sh
+$ go get github.com/jhunters/timewheel
+```
 
 ### base method
 

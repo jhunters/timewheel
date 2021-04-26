@@ -4,7 +4,7 @@ Pure golang implementation for timewheel.
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/jhunters/timewheel?style=flat-square)](https://goreportcard.com/report/github.com/jhunters/timewheel)
 [![Build Status](https://travis-ci.com/jhunters/timewheel.svg?branch=main&status=started)](https://travis-ci.org/jhunters/timewheel)
-[![codecov](https://codecov.io/gh/jhunters/timewheel/branch/master/graph/badge.svg)](https://codecov.io/gh/jhunters/timewheel)
+[![codecov](https://codecov.io/gh/jhunters/timewheel/branch/main/graph/badge.svg?token=dhBirUo4qL)](https://codecov.io/gh/jhunters/timewheel)
 [![Releases](https://img.shields.io/github/release/jhunters/timewheel/all.svg?style=flat-square)](https://github.com/jhunters/timewheel/releases)
 [![Godoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/jhunters/timewheel)
 [![LICENSE](https://img.shields.io/github/license/jhunters/timewheel.svg?style=flat-square)](https://github.com/jhunters/timewheel/blob/master/LICENSE)

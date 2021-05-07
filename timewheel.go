@@ -237,6 +237,6 @@ func (tw *TimeWheel) scanAndRunTask(l *list.List) {
 		if taskSlot.taskid > 0 {
 			delete(tw.timer, taskSlot.taskid)
 		}
-		e = next
+		e = next // 往后遍历
 	}
 }

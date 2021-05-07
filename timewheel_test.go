@@ -65,8 +65,8 @@ func TestTimeWheelStartAndTasks(t *testing.T) {
 			}
 		}}
 
-	tid := timewheel.AddTask(delay, *tt)
-	if tid != 1 {
+	tid, err := timewheel.AddTask(delay, *tt)
+	if tid != 1 || err != nil {
 		t.Error("the first task id should be 1")
 	}
 
@@ -79,9 +79,18 @@ func TestTimeWheelStartAndTasks(t *testing.T) {
 	timewheel.removeTask(tid)
 
 	// add second task
-	tid = timewheel.AddTask(delay*2*time.Duration(slotNum), *tt)
+	tid, err = timewheel.AddTask(delay*2*time.Duration(slotNum), *tt)
+	if err != nil {
+		t.Error(err)
+	}
 	time.Sleep(100 * time.Millisecond)
 	timewheel.RemoveTask(tid)
+
+	// add failed task with delay smaller than interval
+	_, err = timewheel.AddTask(100*time.Millisecond, *tt)
+	if err == nil {
+		t.Error("err should not be nil due to add a delay value smaller than interval task")
+	}
 
 	time.Sleep(2 * time.Second)
 
@@ -104,11 +113,17 @@ func TestTimeWheelExceed1CircleCase(t *testing.T) {
 	tt := &Task{
 		Data: map[string]int{"uid": 105626, "age": 100}, // call back data
 		TimeoutCallback: func(task Task) { // call back function on time out
+			if task.Delay() != delay {
+				t.Error("time delay value should be ", delay, " but actually is ", task.Delay())
+			}
 			if task.Elasped() < delay {
 				t.Error("time out value is errored it should be large than specified time out.")
 			}
 		}}
-	tid := timewheel.AddTask(delay, *tt)
+	tid, err := timewheel.AddTask(delay, *tt)
+	if err != nil {
+		t.Error(err)
+	}
 
 	time.Sleep(2 * time.Second)
 

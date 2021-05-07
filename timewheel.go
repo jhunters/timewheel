@@ -3,6 +3,7 @@ package timewheel
 import (
 	"container/list"
 	"errors"
+	"fmt"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -119,17 +120,21 @@ func (tw *TimeWheel) Stop() {
 }
 
 // AddTimer 添加定时器 key为定时器唯一标识
-func (tw *TimeWheel) AddTask(delay time.Duration, task Task) taskid {
+func (tw *TimeWheel) AddTask(delay time.Duration, task Task) (taskid, error) {
 	if delay <= 0 {
-		return 0
+		return 0, errors.New("parameter 'delay' must be large than zero")
 	}
+	if delay <= tw.interval { // 延迟触发的时间不能小于等于 interval 间隔
+		return 0, fmt.Errorf("parameter 'delay'=%d  should not less than interval = %d ", delay, tw.interval)
+	}
+
 	task.delay = delay
 	tw.locker.Lock()
 	tid := tw.currentTaskID
 	tw.currentTaskID = (taskid)(atomic.AddUint64((*uint64)(&tw.currentTaskID), uint64(1)))
 	tw.locker.Unlock()
 	tw.addTaskChannel <- TaskSlot{delay: delay, now: time.Now(), taskid: tid, task: &task}
-	return tid
+	return tid, nil
 }
 
 // 新增任务到链表中

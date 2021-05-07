@@ -50,7 +50,7 @@ t := &timewheel.Task{
     }}
 
 // add task and return unique task id
-taskid := tw.AddTask(5*time.Second, *t) // add delay task
+taskid, err := tw.AddTask(5*time.Second, *t) // add delay task
 
 ```
 

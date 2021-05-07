@@ -30,7 +30,10 @@ func main() {
 		}}
 
 	// add task and return unique task id
-	taskid, _ := tw.AddTask(5*time.Second, *t)
+	taskid, err := tw.AddTask(5*time.Second, *t)
+	if err != nil {
+	    fmt.Println(err)
+	}
 	fmt.Println("add a new task. taskid=", taskid)
 
 	// before time out we remove the task
@@ -38,7 +41,10 @@ func main() {
 	fmt.Println("remove task. taskid=", taskid)
 
 	// add a new task again
-	taskid, _ = tw.AddTask(5*time.Second, *t)
+	taskid, err = tw.AddTask(5*time.Second, *t)
+	if err != nil {
+	    fmt.Println(err)
+	}
 	fmt.Println("add a new task.  taskid=", taskid)
 
 	fmt.Println("wait 10 seconds here.")

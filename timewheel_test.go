@@ -9,6 +9,7 @@ import (
 
 // TestTimeWheelCreateFaile test on create a new TimeWheel failed case
 func TestTimeWheelCreateFaile(t *testing.T) {
+	// to test with the case of New time wheel with error input parameters
 	convey.Convey("New timewheel with error parameter", t, func() {
 		convey.Convey("invalid slot number", func() {
 			timewheel, err := New(100*time.Millisecond, 0)

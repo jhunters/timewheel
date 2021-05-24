@@ -137,6 +137,8 @@ func TestTimeWheelExceed1CircleCase(t *testing.T) {
 			if exist {
 				t.Errorf("task id '%d' should not exist", tid)
 			}
+
+			timewheel.RemoveTask(tid)
 		})
 	})
 

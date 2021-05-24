@@ -8,7 +8,10 @@ import (
 )
 
 func main() {
+	ExampleRunWithTimewheel()
+}
 
+func ExampleRunWithTimewheel() {
 	// 初始化时间轮
 	// 第一个参数为tick刻度, 即时间轮多久转动一次
 	// 第二个参数为时间轮槽slot数量
@@ -32,7 +35,7 @@ func main() {
 	// add task and return unique task id
 	taskid, err := tw.AddTask(5*time.Second, *t)
 	if err != nil {
-	    fmt.Println(err)
+		fmt.Println(err)
 	}
 	fmt.Println("add a new task. taskid=", taskid)
 
@@ -43,7 +46,7 @@ func main() {
 	// add a new task again
 	taskid, err = tw.AddTask(5*time.Second, *t)
 	if err != nil {
-	    fmt.Println(err)
+		fmt.Println(err)
 	}
 	fmt.Println("add a new task.  taskid=", taskid)
 

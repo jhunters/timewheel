@@ -74,7 +74,13 @@ func TestTimeWheelStartAndTasks(t *testing.T) {
 			convey.So(err, convey.ShouldBeNil)
 			convey.So(timewheel.currentTaskID, convey.ShouldEqual, tid+1)
 
+			exsit := timewheel.HasTask(tid)
+			convey.So(exsit, convey.ShouldBeTrue)
+
 			time.Sleep(2 * time.Second)
+
+			exsit = timewheel.HasTask(tid)
+			convey.So(exsit, convey.ShouldBeFalse)
 		})
 
 		convey.Convey("remove a time task", func() {

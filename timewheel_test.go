@@ -99,6 +99,8 @@ func TestTimeWheelStartAndTasks(t *testing.T) {
 			convey.So(timewheel.currentTaskID, convey.ShouldEqual, tid+1)
 
 			time.Sleep(2 * time.Second)
+
+			timewheel.RemoveTask(tid) // remove task id which it exsited
 		})
 
 	})
@@ -138,7 +140,6 @@ func TestTimeWheelExceed1CircleCase(t *testing.T) {
 				t.Errorf("task id '%d' should not exist", tid)
 			}
 
-			timewheel.RemoveTask(tid)
 		})
 	})
 

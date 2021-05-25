@@ -7,6 +7,7 @@ Pure golang implementation for timewheel.
 [![codecov](https://codecov.io/gh/jhunters/timewheel/branch/main/graph/badge.svg?token=dhBirUo4qL)](https://codecov.io/gh/jhunters/timewheel)
 [![Releases](https://img.shields.io/github/release/jhunters/timewheel/all.svg?style=flat-square)](https://github.com/jhunters/timewheel/releases)
 [![Godoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/jhunters/timewheel)
+[![Go Reference](https://golang.com.cn/badge/github.com/jhunters/timewheel.svg)](https://golang.com.cn/github.com/jhunters/timewheel)
 [![LICENSE](https://img.shields.io/github/license/jhunters/timewheel.svg?style=flat-square)](https://github.com/jhunters/timewheel/blob/master/LICENSE)
 
 ![pic/timewheel.png](pic/timewheel.png)

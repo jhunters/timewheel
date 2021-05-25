@@ -57,18 +57,24 @@ func TestTimeWheelStartAndTasks(t *testing.T) {
 
 		convey.So(timewheel.ticker, convey.ShouldNotBeNil)
 
+		convey.Convey("add time task with error parameter", func() {
+			delay := time.Duration(0) // case with delay = 0
+			tt := newTask(delay, t)
+			tid, err := timewheel.AddTask(delay, *tt)
+			convey.So(err, convey.ShouldNotBeNil)
+			convey.So(tid, convey.ShouldEqual, 0)
+
+			delay = interval / 2 // case with delay smaller than interval
+			tid, err = timewheel.AddTask(delay, *tt)
+			convey.So(err, convey.ShouldNotBeNil)
+			convey.So(tid, convey.ShouldEqual, 0)
+		})
+
 		var tid taskid = 1
 		convey.Convey("add a time task", func() {
 			// test add task and timeout
 			delay := 1 * time.Second
-			tt := &Task{
-				Data: map[string]int{"uid": 105626, "age": 100}, // call back data
-				TimeoutCallback: func(task Task) { // call back function on time out
-					if task.Elasped() < delay {
-						t.Error("time out value is errored it should be large than specified time out.")
-					}
-				}}
-
+			tt := newTask(delay, t)
 			tid, err := timewheel.AddTask(delay, *tt)
 			convey.So(tid, convey.ShouldEqual, tid)
 			convey.So(err, convey.ShouldBeNil)
@@ -111,6 +117,17 @@ func TestTimeWheelStartAndTasks(t *testing.T) {
 
 	})
 
+}
+
+func newTask(delay time.Duration, t *testing.T) *Task {
+	tt := &Task{
+		Data: map[string]int{"uid": 105626, "age": 100}, // call back data
+		TimeoutCallback: func(task Task) { // call back function on time out
+			if task.Elasped() < delay { // check elasped time should small than delay
+				t.Error("time out value is errored it should be large than specified time out.")
+			}
+		}}
+	return tt
 }
 
 // TestTimeWheelExceed1CircleCase to test time wheel task exceed 1 circle case

@@ -26,7 +26,7 @@ func ExampleTimeWheel() {
 	t := &timewheel.Task{
 		Data: map[string]int{"uid": 105626, "age": 100}, // call back data
 		TimeoutCallback: func(task timewheel.Task) { // call back function on time out
-			fmt.Println("time out:", task.Delay(), task.Data, task.Elasped())
+			fmt.Println("time out:", task.Delay(), task.Data /*, task.Elasped()*/)
 		}}
 
 	// add task and return unique task id
@@ -55,4 +55,12 @@ func ExampleTimeWheel() {
 
 	// 停止时间轮
 	tw.Stop()
+
+	// Output: time wheel created.
+	// time wheel started.
+	// add a new task. taskid= 1
+	// remove task. taskid= 1
+	// add a new task.  taskid= 2
+	// wait 10 seconds here.
+	// time out: 5s map[age:100 uid:105626]
 }

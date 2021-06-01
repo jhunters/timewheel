@@ -40,7 +40,6 @@ func TestTimeWheelCreate(t *testing.T) {
 		convey.So(timewheel.interval, convey.ShouldEqual, interval)
 		convey.So(timewheel.ticker, convey.ShouldBeNil)
 	})
-
 }
 
 // TestTimeWheelStartAndTasks test add tasks after start

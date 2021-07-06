@@ -25,7 +25,7 @@ $ go get github.com/jhunters/timewheel
 
 create timewheel
 
-```
+```go
 // 初始化时间轮
 // 第一个参数为tick刻度, 即时间轮多久转动一次
 // 第二个参数为时间轮槽slot数量
@@ -41,7 +41,7 @@ tw.Start()
 
 add delay task
 
-```
+```go
 // create a task bind with key, data and  time out call back function.
 t := &timewheel.Task{
     Data: map[string]int{"uid": 105626, "age": 100}, // business data
@@ -57,19 +57,19 @@ taskid, err := tw.AddTask(5*time.Second, *t) // add delay task
 
 remove delay task
 
-```
+```go
 tw.Remove(taskid)
 ```
 
 check task
 
-```
+```go
 tw.HasTask(taskid)
 ```
 
 close time wheel
 
-```
+```go
 tw.Stop()
 ```
 ## example

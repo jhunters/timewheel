@@ -174,7 +174,7 @@ func (tw *TimeWheel) getPositionAndCircle(d time.Duration) (pos uint16, circle u
 
 // RemoveTimer 删除定时器 key为添加定时器时传递的定时器唯一标识
 func (tw *TimeWheel) RemoveTask(key taskid) {
-	if key > 0 {
+	if key > 0 { // taskid must large than zero
 		tw.removeTaskChannel <- key
 	}
 }

@@ -112,6 +112,9 @@ func (tw *TimeWheel) Start() {
 
 // start time wheel. to handle all chan listener in the loop
 func (tw *TimeWheel) start() {
+	defer func() {
+		fmt.Println("warning! timewheel exit event loop.")
+	}()
 	for {
 		select {
 		case <-tw.ticker.C:

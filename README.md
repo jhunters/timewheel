@@ -1,9 +1,14 @@
+<!--
+ * @Author: Malin Xie
+ * @Description: 
+ * @Date: 2021-04-16 13:46:51
+-->
 # timewheel
 
 Pure golang implementation for timewheel.
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/jhunters/timewheel?style=flat-square)](https://goreportcard.com/report/github.com/jhunters/timewheel)
-[![Build Status](https://travis-ci.com/jhunters/timewheel.svg?branch=main&status=started)](https://travis-ci.org/jhunters/timewheel)
+[![Go](https://github.com/jhunters/timewheel/actions/workflows/go.yml/badge.svg)](https://github.com/jhunters/timewheel/actions/workflows/go.yml)
 [![codecov](https://codecov.io/gh/jhunters/timewheel/branch/main/graph/badge.svg?token=dhBirUo4qL)](https://codecov.io/gh/jhunters/timewheel)
 [![Releases](https://img.shields.io/github/release/jhunters/timewheel/all.svg?style=flat-square)](https://github.com/jhunters/timewheel/releases)
 [![Godoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/jhunters/timewheel)

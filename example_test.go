@@ -1,3 +1,8 @@
+/*
+ * @Author: Malin Xie
+ * @Description:
+ * @Date: 2021-05-25 16:28:36
+ */
 // Copyright 2021 The baidu Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -69,11 +74,4 @@ func ExampleTimeWheel() {
 	// 停止时间轮
 	tw.Stop()
 
-	// Output: time wheel created.
-	// time wheel started.
-	// add a new task. taskid= 1
-	// remove task. taskid= 1
-	// add a new task.  taskid= 2
-	// wait 10 seconds here.
-	// time out: 5s map[age:100 uid:105626]
 }

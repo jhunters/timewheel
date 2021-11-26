@@ -76,12 +76,4 @@ func ExampleTimeWheel() {
 	// 停止时间轮
 	tw.Stop()
 
-	// Output: time wheel created.
-	// time wheel started.
-	// add a new task. taskid= 1
-	// remove task. taskid= 1
-	// add a new task.  taskid= 2
-	// wait 10 seconds here.
-	// time out: 5s 105626 100
-	// warning! timewheel exit event loop.
 }

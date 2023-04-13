@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+//	http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,13 +25,13 @@ func TestTimeWheelCreateFaile(t *testing.T) {
 	// to test with the case of New time wheel with error input parameters
 	convey.Convey("New timewheel with error parameter", t, func() {
 		convey.Convey("invalid slot number", func() {
-			timewheel, err := New(100*time.Millisecond, 0)
+			timewheel, err := New[string](100*time.Millisecond, 0)
 			convey.So(timewheel, convey.ShouldBeNil)
 			convey.So(err, convey.ShouldNotBeNil)
 		})
 
 		convey.Convey("invalid interval", func() {
-			timewheel, err := New(time.Duration(-1), 10)
+			timewheel, err := New[string](time.Duration(-1), 10)
 			convey.So(timewheel, convey.ShouldBeNil)
 			convey.So(err, convey.ShouldNotBeNil)
 		})
@@ -45,7 +45,7 @@ func TestTimeWheelCreate(t *testing.T) {
 	convey.Convey("New time wheel success", t, func() {
 		var slotNum uint16 = 16
 		var interval time.Duration = 100 * time.Millisecond
-		timewheel, err := New(interval, slotNum)
+		timewheel, err := New[string](interval, slotNum)
 		convey.So(timewheel, convey.ShouldNotBeNil)
 		convey.So(err, convey.ShouldBeNil)
 
@@ -61,7 +61,7 @@ func TestTimeWheelStartAndTasks(t *testing.T) {
 	convey.Convey("New time wheel success and start", t, func() {
 		var slotNum uint16 = 16
 		var interval time.Duration = 100 * time.Millisecond
-		timewheel, err := New(interval, slotNum)
+		timewheel, err := New[map[string]int](interval, slotNum)
 		timewheel.Start()
 		defer timewheel.Stop()
 		convey.So(timewheel, convey.ShouldNotBeNil)
@@ -109,16 +109,16 @@ func TestTimeWheelStartAndTasks(t *testing.T) {
 		convey.Convey("add a time task again", func() {
 			// test add task and timeout
 			delay := 1 * time.Second
-			tt := &Task{
+			tt := &Task[map[string]int]{
 				Data: map[string]int{"uid": 105626, "age": 100}, // call back data
-				TimeoutCallback: func(task Task) { // call back function on time out
+				TimeoutCallback: func(task Task[map[string]int]) { // call back function on time out
 					if task.Elasped() < delay {
 						t.Error("time out value is errored it should be large than specified time out.")
 					}
 				}}
 
-			tid, err := timewheel.AddTask(delay*2*time.Duration(slotNum), *tt)
-			convey.So(tid, convey.ShouldEqual, tid)
+			tid2, err := timewheel.AddTask(delay*2*time.Duration(slotNum), *tt)
+			convey.So(tid, convey.ShouldEqual, tid2)
 			convey.So(err, convey.ShouldBeNil)
 			convey.So(timewheel.currentTaskID, convey.ShouldEqual, tid+1)
 
@@ -131,10 +131,10 @@ func TestTimeWheelStartAndTasks(t *testing.T) {
 
 }
 
-func newTask(delay time.Duration, t *testing.T) *Task {
-	tt := &Task{
+func newTask(delay time.Duration, t *testing.T) *Task[map[string]int] {
+	tt := &Task[map[string]int]{
 		Data: map[string]int{"uid": 105626, "age": 100}, // call back data
-		TimeoutCallback: func(task Task) { // call back function on time out
+		TimeoutCallback: func(task Task[map[string]int]) { // call back function on time out
 			if task.Elasped() < delay { // check elasped time should small than delay
 				t.Error("time out value is errored it should be large than specified time out.")
 			}
@@ -148,7 +148,7 @@ func TestTimeWheelExceed1CircleCase(t *testing.T) {
 	convey.Convey("test time wheel exceed circle case", t, func() {
 		var slotNum uint16 = 16
 		var interval time.Duration = 100 * time.Millisecond
-		timewheel, err := New(interval, slotNum)
+		timewheel, err := New[map[string]int](interval, slotNum)
 		timewheel.Start()
 		defer timewheel.Stop()
 		convey.So(timewheel, convey.ShouldNotBeNil)
@@ -156,9 +156,9 @@ func TestTimeWheelExceed1CircleCase(t *testing.T) {
 
 		convey.Convey("add a task", func() {
 			delay := 1 * time.Second
-			tt := &Task{
+			tt := &Task[map[string]int]{
 				Data: map[string]int{"uid": 105626, "age": 100}, // call back data
-				TimeoutCallback: func(task Task) { // call back function on time out
+				TimeoutCallback: func(task Task[map[string]int]) { // call back function on time out
 					if task.Delay() != delay {
 						t.Error("time delay value should be ", delay, " but actually is ", task.Delay())
 					}
@@ -179,7 +179,7 @@ func TestTimeWheelExceed1CircleCase(t *testing.T) {
 	})
 
 	var slotNum uint16 = 2
-	timewheel, err := New(100*time.Millisecond, slotNum)
+	timewheel, err := New[string](100*time.Millisecond, slotNum)
 	if err != nil {
 		t.Error(err)
 	}

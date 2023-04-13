@@ -1,10 +1,11 @@
 module github.com/jhunters/timewheel
 
-go 1.15
+go 1.18
+
+require github.com/smartystreets/goconvey v1.6.4
 
 require (
-	github.com/ouqiang/timewheel v1.0.1
-	github.com/peterh/liner v1.2.1
-	github.com/sbinet/go-eval v0.0.0-20160521182218-34e015998e32
-	github.com/smartystreets/goconvey v1.6.4
+	github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1 // indirect
+	github.com/jtolds/gls v4.20.0+incompatible // indirect
+	github.com/smartystreets/assertions v0.0.0-20180927180507-b2de0cb4f26d // indirect
 )
